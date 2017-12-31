@@ -1,5 +1,4 @@
-
-npi (Nim Packet Inspector)
+# npi (Nim Packet Inspector)
 
 This is an experimental project to expose packets into user space through netfliter using Nim language. also it uses raw socket to resend the packet or form a different response speaking tcp wise,for example response with fake ACK and different tcp window size similar to most tcp accelerator.
 
