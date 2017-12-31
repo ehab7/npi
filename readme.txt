@@ -15,7 +15,7 @@ gcc -shared -o customchecksum.so customchecksum.o
 # to add netfliter queue on certain tcp packets: 
 iptables -t raw -I PREROUTING -p tcp -d x.x.x.x -j NFQUEUE - queue-num y 
 iptables -t raw -I PREROUTING -p tcp -s x.x.x.x -j NFQUEUE - queue-num y
-it depends on usage and configuration since, the above using raw table to queue packet before hit nat for masquerade 
+it depends on usage and configuration, the above using raw table to queue packet before hit nat for masquerade 
 
 # simple setup up using pc1 as packet source and pc2 as tpi as gateway 
     _________                    ________________
