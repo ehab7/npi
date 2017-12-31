@@ -28,7 +28,8 @@ it depends on usage and configuration since, the above using raw table to queue 
 
  
 usage npi <queuenum> <ifindex> <out mac> <gw mac> <ipaddr> <len>
-./npi 1 1  "08:00:27:c6:ce:73" "e8:fc:af:cc:8b:33" "192.168.0.2" 1024
+./npi 1 1  "08:00:28:f7:ce:83" "e2:f5:a9:cc:8b:41" "192.168.0.2" 1024
+# the ipaddr and len just to distinguish between local and remote packet 
 
 sudo tcpdump -i lo -p tcp -v -x -n -e -s 64
 03:45:35.236345 08:00:28:f7:ce:83 > e2:f5:a9:cc:8b:41, ethertype IPv4 (0x0800), length 54: (tos 0x0, ttl 4, id 0, offset 0, flags [none], proto TCP (6), length 40)
