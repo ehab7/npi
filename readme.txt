@@ -1,6 +1,6 @@
 # npi (Nim Packet Inspector)
 
-This is an experimental project to expose packets into user space through netfliter using Nim language. also it uses raw socket to resend the packet and also can alert the headers or payload for example response with fake ACK and different tcp window size similar something that most tcp accelerators do.
+This is an experimental project to expose packets into user space through netfliter and using Nim language. also it uses raw socket to resend the packet which may also alert the headers or payload for example send fake ACK and different tcp window size in response to tcp PSH similar to most tcp accelerators.
 
 # To compile:
 nim c --threads:on --L:/PathTo/libnetfilter_queue.so -L:/PathTo/customchecksum.so --cincludes:./ tdpi.nim
