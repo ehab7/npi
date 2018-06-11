@@ -1,6 +1,6 @@
 # npi (Nim Packet Inspector)
 
-This is an experimental project to expose packets into user space through netfliter and using Nim language. also it uses raw socket to resend the packet which may also alert the headers or payload for example send fake ACK and different tcp window size in response to tcp PSH similar to most tcp accelerators.
+This is an experimental project to intercept and expose packets into user space through netfliter and Nim language. it uses raw socket to resend the packets to the destination and also can alert the headers or payload if needed for example send back fake ACK or different tcp window size in similar fashion to most tcp accelerators.
 
 # To compile:
 nim c --threads:on --L:/PathTo/libnetfilter_queue.so -L:/PathTo/customchecksum.so --cincludes:./ tdpi.nim
@@ -17,7 +17,7 @@ iptables -t raw -I PREROUTING -p tcp -d x.x.x.x -j NFQUEUE - queue-num y
 iptables -t raw -I PREROUTING -p tcp -s x.x.x.x -j NFQUEUE - queue-num y
 it depends on usage and configuration, the above using raw table to queue packet before hit nat for masquerade 
 
-# simple setup up using pc1 as packet source and pc2 as tpi as gateway 
+# to test used a simple setup up PC1 as packet source and PC1 as tpi as gateway 
     _________                    ________________
    |         |                   |               | 
    |   PC1   | ------------>     |eth1  PC2 eth2 | ----> actual internet gw
@@ -27,14 +27,10 @@ it depends on usage and configuration, the above using raw table to queue packet
 
 
  
-usage npi <queuenum> <ifindex> <out mac> <gw mac> <ipaddr> <len>
-./npi 1 1  "08:00:28:f7:ce:83" "e2:f5:a9:cc:8b:41" "192.168.0.2" 1024
-# the ipaddr and len just to distinguish between local and remote packet 
- 
+usage:
+npi <queuenum> <ifindex> <out mac> <gw mac> <ipaddr> <len>
+./npi 1 1  "08:00:28:f7:ce:83" "e2:f5:a9:6c:8b:41" "192.168.0.2" 1024
+
+to observe the traffic:
 sudo tcpdump -i lo -p tcp -v -x -n -e -s 64
-03:45:35.236345 08:00:28:f7:ce:83 > e2:f5:a9:cc:8b:41, ethertype IPv4 (0x0800), length 54: (tos 0x0, ttl 4, id 0, offset 0, flags [none], proto TCP (6), length 40)
-    192.168.0.2.46906 > 173.194.203.103.443: Flags [.], cksum 0xfde3 (correct), ack 2742262603, win 100, length 0
-    0x0000:  4500 0028 0000 0000 0406 7cfc c0a8 0002
-    0x0010:  adc2 cb67 b73a 01bb ca8b a134 1c9b 3667
-    0x0020:  5010 0064 fde3 0000
     
